@@ -52,7 +52,6 @@ INSTALLED_APPS = [
 
 import datetime
 
-OPENAI_API_KEY = "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"
 
 JWT_SECRET = 'infyapple'  # Replace with a secure key
 JWT_ALGORITHM = 'HS256'         # Default algorithm for JWT

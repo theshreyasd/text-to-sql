@@ -106,32 +106,18 @@ class logout(APIView):
         UserAuthentication.user_id = None
         return Response({'message': 'User Logged Out Successfully.'}, status=200)
     
-openai.api_key = settings.OPENAI_API_KEY
 class generate_sql(APIView):
     def post(self, request):
         prompt = request.data.get('textContent')
         try:
-            # response = openai.chat.completions.create(
-            # model="gpt-3.5-turbo",  # Specify the model, e.g., gpt-3.5-turbo
-            # messages=[
-            #     {"role": "system", "content": "You are an assistant that generates SQL queries."},
-            #     {"role": "user", "content": f"Convert this to a SQL query: {prompt}"}
-            # ],
-            # max_tokens=200,
-            # temperature=0.5,
-            # )
             output = {
                 "textContent" : prompt, 
                 "sqlContent" : 'SELECT MAX(salary) as second_highest_salary FROM employees;'
             }
             return Response({'message':output}, status=200)
-            # return Response({'message':response['choices'][0]['text'].strip()}, status=400)
         except Exception as e:
             return Response({'error':'Couldnt generate sql query'}, status=400)
-        except openai.error.OpenAIError as e:
-            return Response({'error':'Couldnt generate sql query'}, status=400)
-        except Exception as e:
-            return Response({'error':'Couldnt generate sql query'}, status=400)
+        
     
 
 class add_query(APIView):
