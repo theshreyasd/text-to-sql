@@ -1,0 +1,15 @@
+.rainbow-text {
+    color: black;
+    transition: all 0.3s ease;
+  }
+  
+.rainbow-text:hover {
+background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+/* Important: Use display: inline-block; to contain the background */
+display: inline-block; 
+width: fit-content; 
+transform: scale(1.05); 
+}
+

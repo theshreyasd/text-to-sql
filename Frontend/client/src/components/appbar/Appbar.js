@@ -6,6 +6,8 @@ import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { logout } from '../../reduxApi/actions/authActions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const drawerWidth = 240;
 
@@ -33,6 +35,12 @@ const defaultTheme = createTheme({
 });
 
 export default function Appbar(props) {
+  const dispatch = useDispatch();
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    dispatch(logout())
+  };
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -53,7 +61,13 @@ export default function Appbar(props) {
             >
               Text To SQL Convertor
             </Typography>
-            {props.route == "home" ? <Button href= "/" color="inherit">{props.route}</Button> : <Button href= "/signin" color="inherit">{props.route}</Button>}
+             
+            {props.route == "home" ? 
+              (<Button href= "/" color="inherit">{props.route}</Button> ):
+              props.route == "logout"?
+              (<Button onClick={handleSubmit} color="inherit">{props.route}</Button> ):
+              <Button href= "/signin" color="inherit">{props.route}</Button>
+            }
             
           </Toolbar>
         </AppBar>

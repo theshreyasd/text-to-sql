@@ -6,4 +6,5 @@
 ## Backend
 1. cd Backend/myproject
 2. to install packages : pip install -r requirements.txt
-3. to run Backend : python manage.py runserver
+3. migreate databse : [1] python manage.py makemigrations [2] python manage.py migrate
+4. to run Backend : python manage.py runserver

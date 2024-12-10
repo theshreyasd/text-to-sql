@@ -27,6 +27,13 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',  # Path to your SQLite database file
+    }
+}
+
 
 # Application definition
 
@@ -38,7 +45,24 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
+    'users', 
+    'rest_framework',
+    'rest_framework_simplejwt',
 ]
+
+import datetime
+
+OPENAI_API_KEY = "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"
+
+JWT_SECRET = 'infyapple'  # Replace with a secure key
+JWT_ALGORITHM = 'HS256'         # Default algorithm for JWT
+JWT_EXP_DELTA_SECONDS = 3600   
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -48,7 +72,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'myproject.urls'

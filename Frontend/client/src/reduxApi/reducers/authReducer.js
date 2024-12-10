@@ -4,11 +4,15 @@ import {
   LOGIN_FAILURE, 
   REGISTER_REQUEST, 
   REGISTER_SUCCESS, 
-  REGISTER_FAILURE} from '../../types'
+  REGISTER_FAILURE, 
+  LOGOUT_SUCCESS, 
+  GET_USER_FAILURE, 
+  GET_USER_SUCCESS
+  } from '../../types'
 
 const initialState = {
     isAuthenticated: false,
-    user: {},
+    user: null,
     loading: false,
     error: null,
   };
@@ -32,8 +36,7 @@ const authReducer = (state = initialState, action) => {
       return { 
         ...state, 
         error: {
-          message: action.payload.message, // Store message only
-          status: action.payload.status, // Store status code only
+          message: action.payload.message // Store message only
         }, 
         loading: false };
 
@@ -53,11 +56,31 @@ const authReducer = (state = initialState, action) => {
       return { 
         ...state, 
         error: {
-          message: action.payload.message, // Store message only
-          status: action.payload.status, // Store status code only
+          message: action.payload.message // Store message only
         },
         loading: false };
     
+    case LOGOUT_SUCCESS:
+      return { 
+        isAuthenticated: false, 
+        user: null, 
+        loading: false };
+    
+    case GET_USER_SUCCESS:
+      return { 
+        ...state, 
+        isAuthenticated: true, 
+        user: action.payload, 
+        loading: false };
+    
+    case GET_USER_FAILURE:
+      return { 
+        ...state, 
+        error: {
+          message: action.payload.message // Store message only
+        }, 
+        loading: false };
+
     default:
       return state;
   }

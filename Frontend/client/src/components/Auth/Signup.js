@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -14,6 +15,9 @@ import Appbar from'../appbar/Appbar';
 import { useState} from 'react';
 import { register } from '../../reduxApi/actions/authActions';
 import { useDispatch, useSelector } from 'react-redux';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+import { useNavigate } from "react-router-dom";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -31,6 +35,16 @@ const darkTheme = createTheme({
 
 export default function SignUp() {
 
+  const { isAuthenticated, user, loading, error } = useSelector(
+    (state) => state.auth
+  );
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/"); // Redirect to home page
+    }
+  }, [isAuthenticated, navigate]);
+
   //auth
   const [state, setState] = useState({firstName:'', lastName:'', email:'', password:''})
   const {firstName, lastName, email, password} = state
@@ -45,7 +59,6 @@ export default function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(register(state))
-    setState({firstName:'', lastName:'', email:'', password:''})
   };
   //auth end
 
@@ -131,6 +144,7 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
+            {error && error !== null ? <Alert severity="warning">{error.message}</Alert> : null}
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link href="/signin" variant="body2">

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from "react";
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -16,6 +17,11 @@ import Appbar from '../appbar/Appbar';
 import {useState} from 'react'
 import { useDispatch} from 'react-redux';
 import { login } from '../../reduxApi/actions/authActions';
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+
 
 const darkTheme = createTheme({
   palette: {
@@ -35,6 +41,16 @@ const darkTheme = createTheme({
 export default function SignIn() {
 
   // auth
+  const { isAuthenticated, user, loading, error } = useSelector(
+    (state) => state.auth
+  );
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/"); // Redirect to home page
+    }
+  }, [isAuthenticated, navigate]);
+
   const [state, setState] = useState({email:'', password:''})
   const {email, password} = state
   const dispatch = useDispatch();
@@ -47,8 +63,7 @@ export default function SignIn() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(login({ email, password }));
-    setState({email:'', password:''})
+    dispatch(login(state));
   };
 
   return (
@@ -107,6 +122,7 @@ export default function SignIn() {
             >
               Sign In
             </Button>
+            {error && error !== null ? <Alert severity="warning">{error.message}</Alert> : null}
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
