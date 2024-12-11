@@ -7,7 +7,6 @@ from .models import Users, UserQueries
 import jwt
 from myproject.settings import JWT_SECRET
 import json
-import openai
 from django.conf import settings
 
 class UserAuthentication:
@@ -112,7 +111,7 @@ class generate_sql(APIView):
         try:
             output = {
                 "textContent" : prompt, 
-                "sqlContent" : 'SELECT MAX(salary) as second_highest_salary FROM employees;'
+                "sqlContent" : 'select id, name, email from users where active = 1 order by name;'
             }
             return Response({'message':output}, status=200)
         except Exception as e:
@@ -126,13 +125,11 @@ class add_query(APIView):
             try:
                 sqlContent = request.data.get('sqlContent')
                 textContent = request.data.get('textContent')
-                print(sqlContent, textContent)
                 user_id = UserAuthentication.user_id
                 user = Users.objects.get(id=user_id)
                 UserQueries.objects.create(user=user, sqlContent=sqlContent, textContent=textContent)  # Save to DB
                 return Response({'message': 'Query added successfully to personal records!'}, status=200)
             except Exception as e:
-                print(e)
                 return Response({'error':'server error'}, status=400)
         else:
             return Response({'error':'session timed out'}, status=400)

@@ -29,6 +29,7 @@ export default function CustomizedInputBase() {
     e.preventDefault()
     dispatch(clearSqlState())
     dispatch(generateSQL(state))
+    setState({textContent : ''})
   };
 
   return (

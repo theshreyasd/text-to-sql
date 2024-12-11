@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { logout } from '../../reduxApi/actions/authActions';
 import { useDispatch, useSelector } from 'react-redux';
-
+import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -29,6 +29,22 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
+const StyledToolbar = styled(Toolbar)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  flexShrink: 0,
+  borderRadius: `calc(${theme.shape.borderRadius}px + 8px)`,
+  backdropFilter: 'blur(24px)',
+  border: '1px solid',
+  borderColor: (theme.vars || theme).palette.divider,
+  backgroundColor: theme.vars
+    ? `rgba(${theme.vars.palette.background.defaultChannel} / 0.4)`
+    : `alpha(theme.palette.background.default, 0.4)`,
+  boxShadow: (theme.vars || theme).shadows[1],
+  padding: '8px 12px',
+}));
+
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme({
     
@@ -45,12 +61,17 @@ export default function Appbar(props) {
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="absolute" sx={{backgroundColor : '#000000'}}>
-          <Toolbar
-            sx={{
-              pr: '24px', // keep right padding when drawer closed
-            }}
-          >
+        <AppBar 
+          position="fixed"
+          enableColorOnDark
+          sx={{
+            boxShadow: 0,
+            bgcolor: 'transparent',
+            backgroundImage: 'none',
+          }}
+        >
+          
+          <StyledToolbar variant="dense" disableGutters>
             <Typography
               component="h1"
               variant="h5"
@@ -59,7 +80,7 @@ export default function Appbar(props) {
               sx={{ flexGrow: 2}}
               style={{fontFamily: "Playfair Display, serif", fontWeight: "831"}}
             >
-              Text To SQL Convertor
+              TEXT {<CompareArrowsIcon/>} SQL
             </Typography>
              
             {props.route == "home" ? 
@@ -69,7 +90,7 @@ export default function Appbar(props) {
               <Button href= "/signin" color="inherit">{props.route}</Button>
             }
             
-          </Toolbar>
+          </StyledToolbar>
         </AppBar>
       </Box>
     </ThemeProvider>

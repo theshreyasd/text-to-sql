@@ -70,14 +70,14 @@ export default function Home() {
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 25,
+            marginTop: 20,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
           }}
         >
           <div component="h1" variant="h1" className='jaro-font' style={{fontSize : "30px"}}>
-          Bridge the Gap: Transform Text into SQL with Precision and Ease!
+          Bridge the Gap: Transform Text into SQL or vice versa with Precision and Ease!
           </div>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 8 }}>
             <Grid container spacing={30}>
